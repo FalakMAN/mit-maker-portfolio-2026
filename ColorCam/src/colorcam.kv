@@ -1,0 +1,123 @@
+<CircleButton@ButtonBehavior+Widget>:
+    canvas:
+        Color:
+            rgba: 1,1,1,1
+        Ellipse:
+            size: self.size
+            pos: self.pos
+    Image:
+        source: "/Users/naz/Documents/ColorCam/icons/camera_icon.png"
+        center: self.parent.center
+        size: dp(24), dp(24)
+        allow_stretch: True
+
+<RoundedButton@ButtonBehavior+BoxLayout>:
+    text: ""
+    size_hint_y: None
+    height: dp(40)
+    orientation: "vertical"
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [10,]
+    Label:
+        text: root.text
+        center: self.center
+        color: 0.1, 0.1, 0.1, 1
+        font_size: dp(14)
+
+
+<WebcamRoot>:
+    orientation: "vertical"
+    spacing: dp(6)
+    padding: dp(6)
+
+    BoxLayout:
+        size_hint_y: None
+        height: dp(40)
+        spacing: dp(6)
+        Label:
+            text: root.status_text
+            halign: "left"
+            valign: "middle"
+            text_size: self.size
+
+        RoundedButton:
+            text: "Quit"
+            size_hint_x: None
+            width: dp(80)
+            on_release: root.quit_app()
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(10)
+        size_hint_y: 0.7
+
+        Image:
+            id: video_view
+            allow_stretch: True
+            keep_ratio: True
+
+        CircleButton:
+            size_hint: None, None
+            size: dp(60), dp(60)
+            pos_hint: {"center_x": 0.5}
+            on_release: root.snapshot()
+
+    BoxLayout:
+        size_hint_y: None
+        height: dp(48)
+        spacing: dp(6)
+
+        GridLayout:
+            cols: 4
+            spacing: dp(6)
+        RoundedButton:
+            text: "Normal"
+            on_release: root.set_mode_normal()
+        RoundedButton:
+            text: "Prot Sim"
+            on_release: root.set_mode_prot_sim()
+        RoundedButton:
+            text: "Deut Sim"
+            on_release: root.set_mode_deut_sim()
+        RoundedButton:
+            text: "Trit Sim"
+            on_release: root.set_mode_trit_sim()
+        RoundedButton:
+            text: "Prot Fix"
+            on_release: root.set_mode_prot_fix()
+        RoundedButton:
+            text: "Deut Fix"
+            on_release: root.set_mode_deut_fix()
+        RoundedButton:
+            text: "Trit Fix"
+            on_release: root.set_mode_trit_fix()
+        Label:
+            text: ""
+
+    BoxLayout:
+        size_hint_y: None
+        height: dp(48)
+        spacing: dp(6)
+        Label:
+            text: "Correction Strength"
+            size_hint_x: None
+            width: dp(140)
+            valign: "middle"
+            text_size: self.size
+        Slider:
+            min: 0.0
+            max: 1.0
+            value: 1.0
+            step: 0.01
+            on_value: root.set_blend(self.value)
+        Label:
+            text: f"{int(root.blend*100)}%"
+            size_hint_x: None
+            width: dp(60)
+            valign: "middle"
+            text_size: self.size
