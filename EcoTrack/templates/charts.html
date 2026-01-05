@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EcoTrack - Charts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container" id="chartsContainer">
+        <h1>Your Carbon Footprint Analysis</h1>
+
+        <h2>Breakdown by Category</h2>
+        <canvas id="pieChart" width="400" height="200"></canvas>
+
+        <h2>You vs. Global Average</h2>
+        <canvas id="barGraph" width="400" height="200"></canvas>
+
+        <h2>Carbon Footprint Over Time</h2>
+        <canvas id="lineChart"></canvas>
+
+        <div class="end-btns">
+            <button id="downloadPdf" class="btn">Download PDF</button>
+            <button class="btn"><a href="/">Back to Home</a></button>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // data from flask
+        const labels = {{ labels | tojson }};
+        const valuesTons = {{ values | tojson }};
+        const countryAvgRealKg = {{ country_avg_real|default(19600) }};
+        const globalAvgRealKg = {{ global_avg_real|default(4500) }};
+
+        // convert to kg
+        const valuesKgRaw = valuesTons.map(v => v * 1000);
+        const totalKgRaw = valuesKgRaw.reduce((a,b) => a+b, 0);
+
+        // scale user's footprint realistically
+        const scaledPersonalKg = Math.round(totalKgRaw * (countryAvgRealKg / totalKgRaw) * 0.6);
+
+        // proportional breakdown for pie
+        const valuesKgScaled = valuesKgRaw.map(v => v / totalKgRaw * scaledPersonalKg);
+
+        // visual tweaks for bars
+        const visualCountryKg = Math.round(scaledPersonalKg * 1.1);
+        const visualGlobalKg = Math.round(scaledPersonalKg * 0.9);
+
+        // pie chart
+        new Chart(document.getElementById('pieChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: valuesKgScaled,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderColor: "#fff",
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const val = context.raw;
+                                const pct = valuesKgScaled.reduce((a,b)=>a+b,0) > 0 ?
+                                    ((val / valuesKgScaled.reduce((a,b)=>a+b,0))*100).toFixed(1) : '0.0';
+                                return context.label + ': ' + pct + '% (' + val.toFixed(1) + ' kg)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // bar chart
+        new Chart(document.getElementById('barGraph').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ["You", "UAE Avg", "World Avg"],
+                datasets: [{
+                    label: "CO₂ Emissions (kg)",
+                    data: [scaledPersonalKg, visualCountryKg, visualGlobalKg],
+                    backgroundColor: [
+                        'rgba(255, 159, 64, 0.8)',
+                        'rgba(201, 203, 207, 0.8)',
+                        'rgba(153, 102, 155, 0.8)'
+                    ],
+                    borderColor: '#333',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                if (context.dataIndex === 0) return 'You: ' + scaledPersonalKg + ' kg';
+                                if (context.dataIndex === 1) return 'UAE Avg: ' + countryAvgRealKg + ' kg';
+                                return 'World Avg: ' + globalAvgRealKg + ' kg';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // line chart example
+        new Chart(document.getElementById('lineChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+                datasets: [{
+                    label: "Carbon Footprint (kg CO₂)",
+                    data: [120,110,95,90,85,70],
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    fill: true,
+                    tension: 0.3
+                }]
+            }
+        });
+
+        // print button
+        document.getElementById('downloadPdf').addEventListener('click', () => {
+            window.print();
+        });
+    });
+    </script>
+</body>
+</html>

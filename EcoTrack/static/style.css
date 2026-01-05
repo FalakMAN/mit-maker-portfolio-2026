@@ -1,0 +1,203 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body, html {
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f8fff8;
+    color: #333;
+}
+
+body.index {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f8fff8;
+    color: #333;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container {
+    width: 80%;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.container-0 {
+    max-width: 800px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-0>p {
+    margin: 0;
+}
+
+svg {
+    margin: 40px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: #2e7d32;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin: 25px 0 15px;
+    color: #388e3c;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #81c784;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 25px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background: #66bb6a;
+    transform: translateY(-2px);
+}
+
+.btn>a {
+    color: white;
+    text-decoration: none;
+}
+
+canvas {
+    margin: 20px auto;
+    display: block;
+    max-width: 600px;
+}
+
+.container {
+    background: linear-gradient(145deg, #ffffff, #f1fff1);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(129, 199, 132, 0.15);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    bottom: -70px;
+    right: -70px;
+    width: 250px;
+    height: 250px;
+    background: rgba(102, 187, 106, 0.15);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+input[type = "text"],
+input[type = "number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: 2px solid #81c784;
+    border-radius: 12px;
+    background: #f1fff1;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input[type = "text"]:focus,
+input[type = "number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 5px rgba(102, 187, 106, 0.5);
+    background: #e6f9e6;
+}
+
+button,
+input[type = "submit"] {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #81c784;
+    color: white;
+    font-weight: 600;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover,
+input[type = "submit"]:hover {
+    background: #66b66a;
+    transform: translateY(-2px);
+}
+
+.form-container {
+    width: 500px;
+    margin: 50px auto;
+    padding: 20px 30px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.end-btns {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}

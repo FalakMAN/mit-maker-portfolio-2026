@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EcoTrack Survey</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Sustainability Survey</h2>
+        <form method="POST" action="/result">
+            <label>Plastic bottles per week:</label>
+            <input type="number" name="plastic" required>
+
+            <label>Food waste per week (kg):</label>
+            <input type="number" name="food" required>
+
+            <label>New clothes per month:</label>
+            <input type="number" name="clothes" required>
+
+            <label>Electricity usage per month (kWh):</label>
+            <input type="number" name="electricity" required>
+
+            <label>Average shower time (minutes):</label>
+            <input type="number" name="water" min="0" value="5" required>
+
+            <label>Flights per year:</label>
+            <input type="number" name="flights" min="0" value="0" required>
+
+            <label>Diet type:</label>
+            <select name="diet">
+                <option value="veg">Vegetarian</option>
+                <option value="meat">Meat-heavy</option>
+                <option value="mixed" selected>Mixed (some meat)</option>
+            </select>
+
+            <label>Recycling habits:</label>
+            <select name="recycling">
+                <option value="always">Always recycle</option>
+                <option value="sometimes" selected>Sometimes</option>
+                <option value="rarely">Rarely</option>
+            </select>
+
+            <label>Main transport mode:</label>
+            <select name="transport">
+                <option value="car">Car</option>
+                <option value="public">Public Transport</option>
+                <option value="cycle">Cycle / Walk</option>
+            </select>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

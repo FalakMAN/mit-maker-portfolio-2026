@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results - EcoTrack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+        .eco-card {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .eco-card h2, .eco-card h3, .eco-card p {
+            margin: 10px 0;
+        }
+        .tree-container {
+            position: relative;
+            width: 100px;
+            height: 200px;
+            margin: 20px auto;
+        }
+        .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 45px;
+            width: 10px;
+            height: 60px;
+            background: #8B4513;
+            border-radius: 3px;
+        }
+        .leaves {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: green;
+            border-radius: 50%;
+            transform: scale(0);
+            transform-origin: bottom center;
+        }
+        .fruit {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            transform: scale(0);
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 10px;
+            background: #4CAF50;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="eco-card">
+        <h2>Your Score: {{ score }}/100</h2>
+        <p>Total CO₂: {{ total_co2 }} kg/year</p>
+
+        <h3>Tips to Reduce Footprint</h3>
+        <ul>
+            {% for tip in tips[:3] %}
+                <li>{{ tip }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="tree-container">
+            <div class="trunk"></div>
+            <div class="leaves"></div>
+        </div>
+
+        <a href="{{ url_for('charts',
+            plastic=data['plastic'],
+            food=data['food'],
+            clothes=data['clothes'],
+            electricity=data['electricity'],
+            water=data['water'],
+            transport=data['transport'],
+            flights=data['flights']) }}" class="btn">
+            View My Chart
+        </a>
+
+        <a href="/survey" class="btn">Take Again</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const leaves = document.querySelector('.leaves');
+            let scale = 0;
+            const maxScale = 1 + Math.min({{ score }}, 100) / 200;
+
+            const treeInterval = setInterval(() => {
+                if (scale >= maxScale) {
+                    clearInterval(treeInterval);
+                    growFruits();
+                    return;
+                }
+                scale += 0.01;
+                leaves.style.transform = 'scale(' + scale + ')';
+            }, 10);
+
+            function growFruits() {
+                const container = document.querySelector('.tree-container');
+                const leavesSize = 100;
+                const fruitSize = 10;
+                const radius = leavesSize / 2 * 1.1 - fruitSize / 2;
+                const centerX = leaves.offsetLeft + leavesSize / 2;
+                const centerY = leaves.offsetTop + leavesSize / 2 - 30;
+
+                let numFruits = 2 + Math.floor({{ score }} / 10);
+                const positions = [];
+
+                for (let i = 0; i < numFruits; i++) {
+                    let x, y, attempts = 0;
+                    do {
+                        const r = Math.sqrt(Math.random()) * radius;
+                        const angle = Math.random() * 2 * Math.PI;
+                        x = centerX + r * Math.cos(angle);
+                        y = centerY + r * Math.sin(angle);
+                        attempts++;
+                    } while (positions.some(pos => Math.hypot(pos.x - x, pos.y - y) < fruitSize * 1.5) && attempts < 100);
+                    positions.push({ x, y });
+                }
+
+                positions.forEach((pos, i) => {
+                    const fruit = document.createElement('div');
+                    fruit.classList.add('fruit');
+                    fruit.style.left = (pos.x - fruitSize / 2) + 'px';
+                    fruit.style.bottom = (container.offsetHeight - pos.y - fruitSize) + 'px';
+                    container.appendChild(fruit);
+
+                    setTimeout(() => {
+                        let fruitScale = 0;
+                        const growInterval = setInterval(() => {
+                            if (fruitScale >= 1) clearInterval(growInterval);
+                            fruitScale += 0.05;
+                            fruit.style.transform = 'scale(' + fruitScale + ')';
+                        }, 30);
+                    }, i * 300);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
