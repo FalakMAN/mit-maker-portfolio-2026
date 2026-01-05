@@ -17,9 +17,10 @@ ColorCam is a computer vision project designed to help people with color vision 
 ## Installation
 1. **Install Python 3** (macOS / Windows / Linux)
 2. **Create virtual environment**:
+```bash
 python -m venv venv (python3 for macOS/Linux)
 source venv/bin/activate
-3. **Install dependencies**:
+4. **Install dependencies**:
 ```bash
 pip3 install opencv-python numpy
 pip3 install kivy
