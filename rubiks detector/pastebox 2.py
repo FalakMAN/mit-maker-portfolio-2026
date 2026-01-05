@@ -1,0 +1,47 @@
+import cv2
+import numpy
+
+def find_squares(edges):
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    squares = []
+
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        if area < 1000: #ignores contours that are too small
+            continue
+
+        peri = cv2.arcLength(cnt, True)
+        approx = cv2.approxPolyDP(cnt, 0.06*peri, True)
+
+        if len(approx) == 4 and cv2.isContourConvex(approx):
+            squares.append(approx)
+    
+    return squares
+
+cap = cv2.VideoCapture(0)
+
+if not cap.isOpened():
+    print("Error: Could not open webcam.")
+    exit()
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    edges = cv2.Canny(blur, 50, 150)
+
+    squares = find_squares(edges)
+    cv2.drawContours(frame, squares, -1, (0, 255, 0), 2)
+
+
+    cv2.imshow("Original + Squares", frame)
+    cv2.imshow("Edges", edges)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
