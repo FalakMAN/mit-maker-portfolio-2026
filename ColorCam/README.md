@@ -5,7 +5,7 @@ ColorCam is a computer vision project designed to help people with color vision 
 ---
 
 ## Features
-- Real-time color correction for different types of color blindness:
+- Real-time color correction (and simulation) for different types of color blindness:
   - **Protanopia** (red deficiency)
   - **Deuteranopia** (green deficiency)
   - **Tritanopia** (blue deficiency)
