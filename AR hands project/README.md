@@ -1,3 +1,8 @@
+# Finger-controlled cursor/AR Fingers and Eyes Tracker
+
+## Overview
+This started off as me playing around with the hand_landmarker API using computer vision. But, once I started adding functionalities, I tried cursor control.
+
 **Steps to run**
 **1. Install Python3 (macOS/Linux/Windows)**
 **2. Create virtual environment**:
