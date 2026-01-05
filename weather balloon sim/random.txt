@@ -1,0 +1,24 @@
+ascent rate of balloon:
+     v(h) = v₀*e^(-h/H)
+
+- v(h): the ascent velocity at altitude h
+- v₀: initial ascent velocity near ground level (h ~ 0)
+- h: altitude
+- H: scale height of the atmosphere(the vertical distance you must go up for the air density to drop to about 37% of its previous value)
+- (-h/H): as h increases, exponent becomes negative
+
+radiation formula:
+    radiation decreases due to:
+        - reduced atmospheric shielding
+        - increased cosmic ray flux
+    
+    empirical model:
+        R(z) = R0*e^(z/Hr)*(z/zmax)*e^((1-z)/zmax),
+
+        where:
+        - z = altitude in meters
+        - R0 = base radiation (ground level)
+        - Hr = scale height (~7000 m)
+        - zmax = Pfotzer maximum altitude (~17,000m in the UAE)
+
+    

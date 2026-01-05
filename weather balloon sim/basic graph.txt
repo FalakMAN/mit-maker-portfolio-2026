@@ -1,0 +1,10 @@
+plt.plot(time/60, altitude/1000) #time in mins, altitude in kms
+plt.xlabel("Time (minutes)")
+plt.ylabel("Altitude (km)")
+plt.title("Balloon Ascent (Simulated)")
+plt.grid(True)
+plt.show()
+
+print(time[:10])
+print(altitude[:10])
+print(altitude[-1])

@@ -1,0 +1,18 @@
+inputs:
+- altitude: 0-30 km
+- time
+- latitude
+- solar activity
+- atmospheric density
+
+processes:
+- balloon ascent (buoyancy + drag)
+- atmospheric thinning
+- radiation intensity increasing with altitude
+- geiger counter measurement and noise (individual particle hits, time-bound detection, conversion to µSv/hr)
+
+outputs:
+- radiation count rate vs altitude
+- 3d flight path
+- confidence intervals/uncertainty
+
