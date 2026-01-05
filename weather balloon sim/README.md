@@ -6,7 +6,7 @@ The simulations guide mission decisions such as launch window selection, payload
 
 ---
 
-## 📌 Objectives
+## Objectives
 
 * Predict **balloon trajectory** using real atmospheric data
 * Model **pressure vs altitude** and ascent rate
@@ -16,69 +16,11 @@ The simulations guide mission decisions such as launch window selection, payload
 
 ---
 
-## 🧠 Simulation Overview
+## Visualizations & Graphs
 
-The simulation pipeline is divided into five logical layers:
 
-1. **Atmospheric Model** – Pressure, temperature, density vs altitude
-2. **Radiation Model** – UV + cosmic radiation scaling with altitude
-3. **Balloon Physics** – Lift, expansion, burst prediction
-4. **Wind Field Integration** – Horizontal drift using wind vectors
-5. **Trajectory Engine** – Time‑step propagation (3D)
 
----
-
-## 📊 Visualizations & Graphs
-
-The repository generates the following key plots:
-
-### 1️⃣ Pressure vs Altitude
-
-Shows the exponential drop in atmospheric pressure with height.
-
-* Confirms sensor calibration
-* Validates ascent modeling
-
-**Typical output:**
-
-* X‑axis: Altitude (m)
-* Y‑axis: Pressure (Pa or hPa)
-
----
-
-### 2️⃣ Temperature vs Altitude
-
-Models troposphere → stratosphere transition.
-
-* Identifies freezing zones
-* Predicts battery performance risks
-
----
-
-### 3️⃣ Radiation vs Altitude
-
-Estimates radiation exposure as atmospheric shielding decreases.
-
-* Includes UV intensity increase
-* Approximates cosmic radiation rise
-
-**Used to:**
-
-* Design shielding
-* Evaluate electronics survivability
-
----
-
-### 4️⃣ Ascent Rate vs Time
-
-Predicts vertical velocity during ascent.
-
-* Validates lift assumptions
-* Detects early leak or over‑inflation scenarios
-
----
-
-### 5️⃣ Predicted Trajectory Map
+### Predicted Trajectory Map
 
 Simulated 2D/3D path of the balloon:
 
@@ -93,49 +35,8 @@ Simulated 2D/3D path of the balloon:
 
 ---
 
-### 6️⃣ Landing Dispersion Simulation
 
-Monte‑Carlo runs to estimate uncertainty in landing location.
-
-* Produces recovery probability ellipse
-* Accounts for wind forecast variance
-
----
-
-## 🧪 Physics Models Used
-
-### 🎈 Balloon Lift Model
-
-Lift is calculated using:
-
-> Lift ∝ (Density_air − Density_gas) × Volume × g
-
-Balloon expansion is modeled assuming near‑ideal gas behavior under decreasing pressure.
-
----
-
-### 💥 Burst Altitude Prediction
-
-Burst occurs when:
-
-* Maximum balloon radius is exceeded
-* Material stress limit is crossed
-
-Burst altitude is estimated dynamically rather than fixed.
-
----
-
-### 🌬️ Wind Drift Model
-
-Horizontal displacement per timestep:
-
-> Δx = Wind_speed(z) × Δt
-
-Wind profiles are interpolated across altitude layers.
-
----
-
-## 🛰️ Data Sources
+## Data Sources
 
 * Standard atmosphere models
 * Forecast wind profiles (pre‑launch)
@@ -145,24 +46,9 @@ Wind profiles are interpolated across altitude layers.
 
 ---
 
-## 🗂️ Repository Structure
 
-```
-/sim
- ├─ atmosphere/      # Pressure, temperature models
- ├─ radiation/       # Radiation scaling functions
- ├─ balloon/         # Lift, expansion, burst logic
- ├─ wind/            # Wind profile ingestion
- ├─ trajectory/      # Core simulation engine
 
-/plots               # Generated graphs & maps
-/data                # Input atmospheric datasets
-/docs                # Simulation explanations
-```
-
----
-
-## ▶️ Running the Simulation
+## Running the Simulation
 
 1. Configure launch parameters
 2. Load atmospheric & wind data
@@ -173,16 +59,7 @@ Simulation outputs are stored in `/plots/`.
 
 ---
 
-## 📈 Example Outputs
-
-* Pressure–Altitude curve
-* Radiation exposure vs altitude
-* Predicted landing zone heatmap
-* Full altitude‑time profile
-
----
-
-## 🔍 Validation
+## Validation
 
 Simulation results are cross‑checked against:
 
@@ -192,7 +69,7 @@ Simulation results are cross‑checked against:
 
 ---
 
-## 🚀 Applications
+##  Applications
 
 * Launch window optimization
 * Payload safety planning
@@ -201,7 +78,7 @@ Simulation results are cross‑checked against:
 
 ---
 
-## 🧭 Future Work
+##  Future Work
 
 * Real‑time in‑flight correction
 * Live telemetry integration
@@ -210,7 +87,7 @@ Simulation results are cross‑checked against:
 
 ---
 
-## 👥 Project Endeavor
+##  Project Endeavor
 
 A student‑led atmospheric exploration project combining physics, simulation, and real‑world experimentation through high‑altitude weather balloons.
 
